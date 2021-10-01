@@ -15,7 +15,7 @@
                     <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt="" />
                     <h3>Welcome</h3>
                     <p>You are 30 seconds away from earning your own money!</p>
-                    <input type="submit" name="" value="Login" /><br />
+                    <a href="display.php">Check Details</a>
                 </div>
                 <div class="col-md-9 register-right">
                     <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
@@ -36,18 +36,18 @@
                                             <input type="text" name="name" class="form-control" placeholder="Your Name" value="" />
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="email" placeholder="Your Email" value="" />
+                                            <input type="email" class="form-control" name="email" placeholder="Your Email" value="" />
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control" name="mobile" placeholder="Phone" value="" />
+                                            <input type="text" class="form-control" name="mobile" placeholder="Phone" value="" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="email" class="form-control" name="refer" placeholder="Any Refer" value="" />
+                                            <input type="text" class="form-control" name="refer" placeholder="Any Refer" value="" />
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" minlength="10" maxlength="10" name="jobpost" class="form-control" placeholder="Job Post" value="" />
+                                            <input type="text" name="jobpost" class="form-control" placeholder="Job Post" value="" />
                                         </div>
                                         <div class="form-group">
                                             <select class="form-control" name="degree">
@@ -110,7 +110,42 @@
     </div>
 
 
-    <?php include 'connection.php' ?>
+    <?php
+    include 'connection.php';
+
+    if (isset($_POST['submit'])) {
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $mobile = $_POST['mobile'];
+        $jobpost = $_POST['jobpost'];
+        $refer = $_POST['refer'];
+        $degree = $_POST['degree'];
+        echo "$name";
+        echo "$email";
+        echo "$mobile";
+        echo "$refer";
+        echo "$jobpost";
+        echo "$degree";
+
+        $insertQuery = "INSERT INTO `job_applications`(`name`, `degree`, `mobile`, `email`, `refer`, `jobpost`) VALUES ('$name','$degree','$mobile','$email','$refer','$jobpost')";
+
+        $res =  mysqli_query($con, $insertQuery);
+
+        if ($res) {
+    ?>
+            <script>
+                alert("Data Inserted Successfully");
+            </script>
+        <?php
+        } else {
+        ?>
+            <script>
+                alert("Data Inserted Failed!!");
+            </script>
+    <?php
+        }
+    }
+    ?>
 
 </body>
 
