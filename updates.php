@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>PHP-CRUD</title>
+    <title>PHP- Update</title>
     <?php include 'links.php' ?>
     <?php include 'css/style.css' ?>
 </head>
@@ -29,28 +29,71 @@
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <h3 class="register-heading">Apply as a Employee</h3>
-                            <form action="index.php" method="post">
+                            <form action="" method="post">
                                 <div class="row register-form">
+
+                                    <?php
+                                    include 'connection.php';
+
+                                    $ids = $_GET['id'];
+
+                                    $showQuery = "select * from job_applications where id={$ids}";
+
+                                    $showdata = mysqli_query($con, $showQuery);
+
+                                    $res = mysqli_fetch_array($showdata);
+
+                                    if (isset($_POST['submit'])) {
+                                        $ids = $_GET['id'];
+                                        $name = $_POST['name'];
+                                        $email = $_POST['email'];
+                                        $mobile = $_POST['mobile'];
+                                        $jobpost = $_POST['jobpost'];
+                                        $refer = $_POST['refer'];
+                                        $degree = $_POST['degree'];
+
+                                        // echo "update $ids";
+
+                                        $updateQuery = "UPDATE `job_applications` SET `id`='$ids',`name`='$name',`degree`='$degree',`mobile`='$mobile',`email`='$email',`refer`='$refer',`jobpost`='$jobpost' WHERE id=$ids";
+
+                                        $result =  mysqli_query($con, $updateQuery);
+
+                                        if ($res) {
+                                    ?>
+                                            <script>
+                                                alert("Data Updated Successfully");
+                                            </script>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <script>
+                                                alert("Data Update Failed!!");
+                                            </script>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="text" name="name" class="form-control" placeholder="Your Name" value="" />
+                                            <input type="text" name="name" class="form-control" placeholder="Your Name" value="<?php echo $res['name']; ?>" />
                                         </div>
                                         <div class="form-group">
-                                            <input type="email" class="form-control" name="email" placeholder="Your Email" value="" />
+                                            <input type="email" class="form-control" name="email" placeholder="Your Email" value="<?php echo $res['email']; ?>" />
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="mobile" placeholder="Phone" value="" />
+                                            <input type="text" class="form-control" name="mobile" placeholder="Phone" value="<?php echo $res['mobile']; ?>" />
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="refer" placeholder="Any Refer" value="" />
+                                            <input type="text" class="form-control" name="refer" placeholder="Any Refer" value="<?php echo $res['refer']; ?>" />
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" name="jobpost" class="form-control" placeholder="Job Post" value="" />
+                                            <input type="text" name="jobpost" class="form-control" placeholder="Job Post" value="<?php echo $res['jobpost']; ?>" />
                                         </div>
                                         <div class="form-group">
-                                            <select class="form-control" name="degree">
+                                            <select class="form-control" name="degree" selected="<?php echo $res['degree']; ?>">
                                                 <option class="hidden" selected disabled>Select your degree</option>
                                                 <option>B.Sc/Diploma</option>
                                                 <option>B.Tech</option>
@@ -110,36 +153,7 @@
     </div>
 
 
-    <?php
-    include 'connection.php';
 
-    if (isset($_POST['submit'])) {
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-        $mobile = $_POST['mobile'];
-        $jobpost = $_POST['jobpost'];
-        $refer = $_POST['refer'];
-        $degree = $_POST['degree'];
-
-        $insertQuery = "INSERT INTO `job_applications`(`name`, `degree`, `mobile`, `email`, `refer`, `jobpost`) VALUES ('$name','$degree','$mobile','$email','$refer','$jobpost')";
-
-        $res =  mysqli_query($con, $insertQuery);
-
-        if ($res) {
-    ?>
-            <script>
-                alert("Data Inserted Successfully");
-            </script>
-        <?php
-        } else {
-        ?>
-            <script>
-                alert("Data Inserted Failed!!");
-            </script>
-    <?php
-        }
-    }
-    ?>
 
 </body>
 

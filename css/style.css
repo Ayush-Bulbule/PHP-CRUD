@@ -134,4 +134,7 @@
 .form-group{
     margin-top: 10px;
 }
+i{
+  cursor: pointer;
+}
 </style>
