@@ -46,11 +46,11 @@
                             <td><?php echo $res['jobpost']; ?></td>
                             <td><?php echo $res['refer']; ?></td>
                             <td><a href="updates.php?id=<?php echo $res['id']; ?>">
-                                    <i class='fa fa-edit' style='color:blue;''>
-                                            </i></a></td>
-                            <td><?php echo "
-                                            <i class='fa fa-trash ms-3' style='color:red;''>
-                                            </i>"; ?></td>
+                                    <i class='fa fa-edit' style='color:blue;'>
+                                    </i></a></td>
+                            <td><a href="delete.php?id=<?php echo $res['id']; ?>">
+                                    <i class=' fa fa-trash' style='color:red;'>
+                                    </i></a></td>
                         </tr>
                     <?php
                     }
